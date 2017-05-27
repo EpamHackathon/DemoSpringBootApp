@@ -33,8 +33,7 @@ node {
             docker login ${dockerhub_creds}
             docker tag demo_app-${BUILD_NUMBER} burakovsky/hdemo:${BUILD_NUMBER}
             docker push burakovsky/hdemo:${BUILD_NUMBER}
-            kubectl run demo --image=burakovsky/hdemo:${BUILD_NUMBER} --expose=true --port 8080
-            kubectl expose deployment demo --type=NodePort --name=test'''
+            kubectl rolling-update demo --image=burakovsky/hdemo:${BUILD_NUMBER} --expose=true --port 8080'''
     }
    }
    /*stage('Add Grafana-dashboard'){
