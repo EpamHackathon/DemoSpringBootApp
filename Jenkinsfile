@@ -26,7 +26,7 @@ node {
              cd build_sources/
              docker build -t demo_app-${BUILD_NUMBER} .'''
    }
-   withCredentials([string(credentialsId: 'dockerhub_creds', variable: 'dockerhub_creds')]) {
+   withCredentials([string(credentialsId: 'dockerhub_creds', variable: 'dockerhub_creds'), string(credentialsId: 'jenkinshack-token', variable: 'jenkinshack-token')]) {
    stage('Uploading to dockerhub'){
       sh '''cd build_sources/
             env
@@ -38,10 +38,10 @@ node {
               kubectl set image deployment/release release=burakovsky/hdemo:${BUILD_NUMBER};
             else
               kubectl run release --image=burakovsky/hdemo:${BUILD_NUMBER} --expose=true --port 8080;
-            fi'''
+            fi
+            curl -u jenkinshack:${jenkinshack-token} -X POST "${CHANGE_URL}/comments" -d "{\"body\": \"Application deployed at https://release.hack.bomba.by/demo/. Monitoring available at https://grafana.hack.bomba.by/release/\", \"line\": null}"
+            '''
     }
    }
-   /*stage('Add Grafana-dashboard'){
-      sh '''( echo "cat <<EOF" ; cat test-dashboard.json ; echo EOF ) | sh | curl 'https://grafana.hack.bomba.by:80/api/dashboards/db' -X POST -H 'Content-Type: application/json;charset=UTF-8' --user admin:admin -d @-'''
-    }*/
+   
 }
