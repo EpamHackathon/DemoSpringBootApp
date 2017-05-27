@@ -39,7 +39,6 @@ node {
             else
               kubectl run release --image=burakovsky/hdemo:${BUILD_NUMBER} --expose=true --port 8080;
             fi
-            curl -u jenkinshack:${jenkinshack-token} -X POST "${CHANGE_URL}/comments" -d "{\"body\": \"hello\", \"line\": null}"
             '''
     }
    }
