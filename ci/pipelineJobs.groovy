@@ -12,7 +12,7 @@ organizationFolder('EpamHackathon') {
             scanCredentialsId("github-username-token")
           
             // Credentials used to check out sources during a build.
-            checkoutCredentialsId("github-username-token")
+            checkoutCredentialsId("github-username-password")
           
             // Whether to build branches defined in the origin (primary) repository, not associated with any pull request.
             buildOriginBranch(true)

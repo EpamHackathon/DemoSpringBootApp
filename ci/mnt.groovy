@@ -24,6 +24,7 @@ def job = { name ->
     project.with {
         scm = new MultiSCM({
             ciScm = new GitSCM("git@github.com:EpamHackathon/DemoSpringBootApp.git")
+            ciScm.userRemoteConfigs[0].credentialsId = 'github-username-token'
             ciScm.branches = [new BranchSpec('$BRANCH_NAME')]
             [ciScm]
         }())
@@ -37,7 +38,7 @@ def job = { name ->
 
         dslBuilder = new ExecuteDslScripts()
         dslBuilder.setTargets('ci/pipelineJobs.groovy')
-        
+
         buildersList.addAll([dslBuilder])
         createTransientActions()
         addTrigger(pollTrigger)
