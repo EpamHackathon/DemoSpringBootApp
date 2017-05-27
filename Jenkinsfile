@@ -26,10 +26,10 @@ node {
              cd build_sources/
              docker build -t demo_app-${BUILD_NUMBER} .'''
    }
-   withCredentials([string(credentialsId: 'dockerhub-creds', variable: 'dockerhub-creds')]) {
+   withCredentials([string(credentialsId: 'dockerhub_creds', variable: 'dockerhub_creds')]) {
    stage('Uploading to dockerhub'){
       sh '''cd build_sources/
-            docker login ${dockerhub-creds}
+            docker login ${dockerhub_creds}
             docker tag demo_app-${BUILD_NUMBER} burakovsky/hdemo:${BUILD_NUMBER}
             docker push burakovsky/hdemo:${BUILD_NUMBER}
             kubectl run demo-${BUILD_NUMBER} --image=burakovsky/hdemo:${BUILD_NUMBER} --expose=true --port 8080
