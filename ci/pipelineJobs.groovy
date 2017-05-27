@@ -9,7 +9,7 @@ organizationFolder('EpamHackathon') {
             repoOwner("EpamHackathon")
           
             // Credentials used to scan branches and pull requests, check out sources and mark commit statuses.
-            scanCredentialsId("github-username-token")
+            scanCredentialsId("github-username-password")
           
             // Credentials used to check out sources during a build.
             checkoutCredentialsId("github-username-password")
