@@ -47,4 +47,13 @@ function init() {
     $.get('../commit.sha1', function (data) {
        $("footer").append(data); 
     });
+    $.ajax({
+        url: "http://pseudorandom.name",
+        method: "GET"
+    })
+        .done(function(data) {
+            var tmp = document.createElement('html');
+            tmp.innerHTML = data;
+            $(".random-name").html($('h1', tmp).html());
+        });
 }
