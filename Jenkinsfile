@@ -35,7 +35,7 @@ node {
             docker push burakovsky/hdemo:${BUILD_NUMBER}
             if [ $(kubectl get deployment | grep release > /dev/null; echo $?) == 0 ]; 
             then 
-              kubectl set image deployment/release burakovsky/hdemo:${BUILD_NUMBER};
+              kubectl set image deployment/release release=burakovsky/hdemo:${BUILD_NUMBER};
             else
               kubectl run release --image=burakovsky/hdemo:${BUILD_NUMBER} --expose=true --port 8080;
             fi'''
