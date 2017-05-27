@@ -26,7 +26,7 @@ node {
              cd build_sources/
              docker build -t demo_app-${BUILD_NUMBER} .'''
    }
-   withCredentials([string(credentialsId: 'dockerhub_creds', variable: 'dockerhub_creds'), string(credentialsId: 'jenkinshack-token', variable: 'jenkinshack-token')]) {
+   withCredentials([string(credentialsId: 'dockerhub_creds', variable: 'dockerhub_creds')]) {
    stage('Uploading to dockerhub'){
       sh '''cd build_sources/
             env
