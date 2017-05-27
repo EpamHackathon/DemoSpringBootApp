@@ -39,7 +39,7 @@ node {
             else
               kubectl run release --image=burakovsky/hdemo:${BUILD_NUMBER} --expose=true --port 8080;
             fi
-            curl -u jenkinshack:${jenkinshack-token} -X POST "${CHANGE_URL}/comments" -d "{\"body\": \"Application deployed at https://release.hack.bomba.by/demo/. Monitoring available at https://grafana.hack.bomba.by/release/\", \"line\": null}"
+            curl -u jenkinshack:${jenkinshack-token} -X POST "${CHANGE_URL}/comments" -d "{\"body\": \"hello\", \"line\": null}"
             '''
     }
    }
