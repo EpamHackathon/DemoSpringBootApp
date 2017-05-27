@@ -26,7 +26,7 @@ node {
              cd build_sources/
              docker build -t demo_app-${BUILD_NUMBER} .'''
    }
-   withCredentials([string(credentialsId: 'dockerhub_creds', variable: 'dockerhub_creds')]) {
+   withCredentials([string(credentialsId: 'dockerhub-creds', variable: 'dockerhub-creds')]) {
    stage('Uploading to dockerhub'){
       sh '''cd build_sources/
             docker login ${dockerhub_creds}
