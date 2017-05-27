@@ -26,17 +26,21 @@ node("pod") {
              cd build_sources/
              docker build -t demo_app-${BUILD_NUMBER} .'''
    }
-   withCredentials([string(credentialsId: 'dockerhub_creds', variable: 'dockerhub_creds')]) {
+   withCredentials([string(credentialsId: 'dockerhub_creds', variable: 'dockerhub_creds'), string(credentialsId: 'jenkinshack-token', variable: 'jenkinshack-token')]) {
    stage('Uploading to dockerhub'){
       sh '''cd build_sources/
+            env
             docker login ${dockerhub_creds}
             docker tag demo_app-${BUILD_NUMBER} burakovsky/hdemo:${BUILD_NUMBER}
             docker push burakovsky/hdemo:${BUILD_NUMBER}
-            kubectl run demo-${BUILD_NUMBER} --image=burakovsky/hdemo:${BUILD_NUMBER} --expose=true --port 8080
-            kubectl expose deployment demo-${BUILD_NUMBER} --type=NodePort --name=demo-service-${BUILD_NUMBER}'''
+            if [ $(kubectl get deployment | grep release > /dev/null; echo $?) == 0 ]; 
+            then 
+              kubectl set image deployment/release release=burakovsky/hdemo:${BUILD_NUMBER};
+            else
+              kubectl run release --image=burakovsky/hdemo:${BUILD_NUMBER} --expose=true --port 8080;
+            fi
+            '''
     }
    }
-   stage('Add Grafana-dashboard'){
-      sh '''( echo "cat <<EOF" ; cat demo-dashboard.json ; echo EOF ) | sh | curl 'http://10.0.0.192:80/api/dashboards/db' -X POST -H 'Content-Type: application/json;charset=UTF-8' --user admin:admin -d @-'''
-    }
+   
 }
