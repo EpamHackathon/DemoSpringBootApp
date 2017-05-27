@@ -9,10 +9,10 @@ organizationFolder('EpamHackathon') {
             repoOwner("EpamHackathon")
           
             // Credentials used to scan branches and pull requests, check out sources and mark commit statuses.
-            scanCredentialsId("token")
+            scanCredentialsId("github-username-token")
           
             // Credentials used to check out sources during a build.
-            checkoutCredentialsId("token")
+            checkoutCredentialsId("github-username-token")
           
             // Whether to build branches defined in the origin (primary) repository, not associated with any pull request.
             buildOriginBranch(true)
